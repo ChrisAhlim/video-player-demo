@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shaka Player Test</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/shaka-player@5.0.9/dist/controls.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="player-wrap">
+      <h2>Shaka Player Test</h2>
+
+      <div>
+        <strong><label for="link-input">Video Link:</label></strong>
+        <input
+          class="input-link"
+          id="link-input"
+          type="text"
+          placeholder="Insert link here.."
+        />
+        <button class="play-btn">Play Video</button>
+      </div>
+
+      <br />
+      <button id="stop-stream-btn">Stop stream</button>
+
+      <br />
+      <br />
+
+      <div class="video-container" data-shaka-player-container>
+        <div id="liveBadge" class="live-badge">
+          <span class="live-dot"></span>
+          <span id="liveBadgeText">LIVE</span>
+        </div>
+        <div class="stream-end-overlay">
+          <h3>Live stream ended</h3>
+        </div>
+        <video id="video" data-shaka-player autoplay playsinline muted></video>
+      </div>
+
+      <div id="log" class="log">Initializing...</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mux.js@6.3.0/dist/mux.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@5.0.9/dist/shaka-player.ui.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>

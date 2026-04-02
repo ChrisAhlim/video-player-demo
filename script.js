@@ -5,8 +5,7 @@ const liveBadgeText = document.getElementById("liveBadgeText");
 const streamEndOverlay = document.querySelector(".stream-end-overlay");
 const stopStreamButton = document.getElementById("stop-stream-btn");
 
-const defaultManifestUri =
-  "https://ott-balancer.tvri.go.id/live/eds/Aceh/hls/Aceh.m3u8";
+const defaultManifestUri = "";
 
 const streamingConfig = {
   streaming: {

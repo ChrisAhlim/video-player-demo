@@ -23,7 +23,6 @@
           type="text"
           placeholder="Insert link here.."
         />
-        <button class="play-btn">Play Video</button>
       </div>
 
       <br />
@@ -33,17 +32,31 @@
           <strong
             ><label for="buffering-goal">Buffering Goal (s):</label></strong
           >
-          <input class="stream-config" id="buffering-goal" type="number" />
+          <input
+            class="stream-config"
+            id="buffering-goal"
+            type="number"
+            step="1"
+          />
         </div>
         <div class="input-wrapper">
           <strong
             ><label for="rebuffering-goal">Rebuffering Goal (s):</label></strong
           >
-          <input class="stream-config" id="rebuffering-goal" type="number" />
+          <input
+            class="stream-config"
+            id="rebuffering-goal"
+            type="number"
+            step="1"
+          />
         </div>
       </div>
 
-      <button id="stop-stream-btn">Stop stream</button>
+      <br />
+      <div class="btn-wrapper">
+        <button class="play-btn">Play Video</button>
+        <button id="stop-stream-btn">Stop stream</button>
+      </div>
 
       <br />
       <br />

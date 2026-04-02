@@ -4,8 +4,8 @@ const liveBadge = document.getElementById("liveBadge");
 const liveBadgeText = document.getElementById("liveBadgeText");
 const streamEndOverlay = document.querySelector(".stream-end-overlay");
 const stopStreamButton = document.getElementById("stop-stream-btn");
-const bufferingGoalInput = document.getElementById("buffering-goal-input");
-const rebufferingGoalInput = document.getElementById("rebuffering-goal-input");
+const bufferingGoalInput = document.getElementById("buffering-goal");
+const rebufferingGoalInput = document.getElementById("rebuffering-goal");
 
 let player;
 let video;
@@ -69,6 +69,11 @@ function showStreamEndOverlay() {
   streamEndOverlay.classList.add("show");
 }
 
+function hideStreamEndOverlay() {
+  isStreamEnded = false;
+  streamEndOverlay.classList.remove("show");
+}
+
 function updateLiveBadge() {
   if (!player) return;
 
@@ -80,6 +85,10 @@ function updateLiveBadge() {
 }
 
 async function loadVideo(manifestUri) {
+  if (isStreamEnded) {
+    hideStreamEndOverlay();
+  }
+
   if (!player) {
     writeLog("Player is not ready yet.");
     return;
@@ -132,9 +141,9 @@ async function init() {
     controlPanelElements: [
       "play_pause",
       "time_and_duration",
-      "spacer",
       "mute",
       "volume",
+      "spacer",
       "fullscreen",
       "overflow_menu",
     ],
@@ -143,12 +152,16 @@ async function init() {
     addBigPlayButton: true,
   });
 
+  inputLink.value = defaultManifestUri;
+  bufferingGoalInput.value = bufferingGoal;
+  rebufferingGoalInput.value = rebufferingGoal;
+
   bufferingGoalInput.addEventListener("change", () => {
-    bufferingGoal = parseInt(bufferingGoalInput.value);
+    bufferingGoal = parseInt(bufferingGoalInput.value) || bufferingGoal;
   });
 
   rebufferingGoalInput.addEventListener("change", () => {
-    rebufferingGoal = parseInt(rebufferingGoalInput.value);
+    rebufferingGoal = parseInt(rebufferingGoalInput.value) || rebufferingGoal;
   });
 
   player.configure(streamingConfig);
@@ -159,11 +172,9 @@ async function init() {
   player.addEventListener("error", onPlayerErrorEvent);
   controls.addEventListener("error", onUIErrorEvent);
 
-  inputLink.value = defaultManifestUri;
-  bufferingGoalInput.value = bufferingGoal;
-  rebufferingGoalInput.value = rebufferingGoal;
-
-  await loadVideo(defaultManifestUri);
+  if (defaultManifestUri) {
+    await loadVideo(defaultManifestUri);
+  }
 }
 
 function initFailed(event) {

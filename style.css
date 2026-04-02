@@ -104,3 +104,13 @@ video {
   display: flex;
   justify-content: space-between;
 }
+
+.shaka-bottom-controls {
+  width: 100%;
+}
+
+/* Override shaka default styles */
+.shaka-controls-container[shown="true"] .shaka-bottom-controls {
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease;
+}

@@ -156,11 +156,11 @@ async function init() {
   bufferingGoalInput.value = bufferingGoal;
   rebufferingGoalInput.value = rebufferingGoal;
 
-  bufferingGoalInput.addEventListener("change", () => {
+  bufferingGoalInput.addEventListener("input", () => {
     bufferingGoal = parseInt(bufferingGoalInput.value) || bufferingGoal;
   });
 
-  rebufferingGoalInput.addEventListener("change", () => {
+  rebufferingGoalInput.addEventListener("input", () => {
     rebufferingGoal = parseInt(rebufferingGoalInput.value) || rebufferingGoal;
   });
 

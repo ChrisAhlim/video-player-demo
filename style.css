@@ -86,3 +86,10 @@ video {
 .stream-end-overlay.show {
   display: flex;
 }
+
+.input-wrapper {
+  padding: 8px 0;
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+}

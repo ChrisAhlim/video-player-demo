@@ -4,18 +4,8 @@ const liveBadge = document.getElementById("liveBadge");
 const liveBadgeText = document.getElementById("liveBadgeText");
 const streamEndOverlay = document.querySelector(".stream-end-overlay");
 const stopStreamButton = document.getElementById("stop-stream-btn");
-
-const defaultManifestUri = "";
-
-const streamingConfig = {
-  streaming: {
-    bufferingGoal: 10,
-    rebufferingGoal: 1,
-    bufferBehind: 10,
-    lowLatencyMode: true,
-    safeSeekOffset: 1,
-  },
-};
+const bufferingGoalInput = document.getElementById("buffering-goal-input");
+const rebufferingGoalInput = document.getElementById("rebuffering-goal-input");
 
 let player;
 let video;
@@ -23,6 +13,19 @@ let controls;
 let latencyInterval;
 let liveStatusInterval;
 let isStreamEnded = false;
+let bufferingGoal = 5;
+let rebufferingGoal = 1;
+
+const defaultManifestUri = "";
+const streamingConfig = {
+  streaming: {
+    bufferingGoal: bufferingGoal,
+    rebufferingGoal: rebufferingGoal,
+    // bufferBehind: 10,
+    lowLatencyMode: true,
+    safeSeekOffset: 1,
+  },
+};
 
 function writeLog(...args) {
   const el = document.getElementById("log");
@@ -140,6 +143,14 @@ async function init() {
     addBigPlayButton: true,
   });
 
+  bufferingGoalInput.addEventListener("change", () => {
+    bufferingGoal = parseInt(bufferingGoalInput.value);
+  });
+
+  rebufferingGoalInput.addEventListener("change", () => {
+    rebufferingGoal = parseInt(rebufferingGoalInput.value);
+  });
+
   player.configure(streamingConfig);
 
   window.player = player;
@@ -149,6 +160,8 @@ async function init() {
   controls.addEventListener("error", onUIErrorEvent);
 
   inputLink.value = defaultManifestUri;
+  bufferingGoalInput.value = bufferingGoal;
+  rebufferingGoalInput.value = rebufferingGoal;
 
   await loadVideo(defaultManifestUri);
 }

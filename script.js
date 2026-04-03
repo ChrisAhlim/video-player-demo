@@ -17,13 +17,57 @@ let bufferingGoal = 5;
 let rebufferingGoal = 1;
 
 const defaultManifestUri = "";
+// const streamingConfig = {
+//   streaming: {
+//     bufferingGoal: bufferingGoal,
+//     rebufferingGoal: rebufferingGoal,
+//     // bufferBehind: 10,
+//     lowLatencyMode: true,
+//     safeSeekOffset: 1,
+//   },
+// };
+
 const streamingConfig = {
+  abr: {
+    enabled: true,
+    useNetworkInformation: true,
+    defaultBandwidthEstimate: 2_000_000, // 2 Mbps start
+    switchInterval: 4, // faster adaptation
+    bandwidthUpgradeTarget: 0.85,
+    bandwidthDowngradeTarget: 0.95,
+  },
+
   streaming: {
-    bufferingGoal: bufferingGoal,
-    rebufferingGoal: rebufferingGoal,
-    // bufferBehind: 10,
+    // LOW LATENCY CORE
     lowLatencyMode: true,
-    safeSeekOffset: 1,
+    inaccurateManifestTolerance: 0,
+    // ⏱ LIVE EDGE CONTROL
+    liveSync: {
+      enabled: true,
+      targetLatency: 3, // seconds behind live
+    },
+
+    // BUFFER (critical for latency)
+    bufferingGoal: 6,
+    rebufferingGoal: 1,
+    bufferBehind: 30, // DVR window
+
+    // LIVE PERFORMANCE
+    segmentPrefetchLimit: 2,
+    updateIntervalSeconds: 1,
+    // retryParameters: {
+    //   timeout: 3000,
+    //   maxAttempts: 2,
+    //   baseDelay: 100,
+    // },
+  },
+
+  manifest: {
+    retryParameters: {
+      timeout: 3000,
+      maxAttempts: 2,
+      baseDelay: 100,
+    },
   },
 };
 
